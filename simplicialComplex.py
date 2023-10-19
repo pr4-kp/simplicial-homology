@@ -13,7 +13,8 @@ class SimplicialComplex:
     def get_n_simplices(self, n: int) -> set[list[int]]:
         return self.simplicialComplex[n]
     
-    # TODO: Gaussian elimination matrix rank
+    # Gaussian elimination matrix rank
+    # Source: https://cp-algorithms.com/linear_algebra/rank-matrix.html
     def __matrix_rank(M: np.NdArray) -> int:
         n = len(M) # number of rows
         m = len(M[0]) # number of columns

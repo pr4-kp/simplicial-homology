@@ -31,9 +31,11 @@ class Torus:
     simplex.add_simplex([4,6])
     simplex.add_simplex([4,5])
     simplex.add_simplex([4,7])
+    simplex.add_simplex([3,4])
 
     simplex.add_simplex([5,7])
     simplex.add_simplex([5,1])
+    simplex.add_simplex([1,7])
 
     simplex.add_simplex([3,2])
     simplex.add_simplex([3,6])
@@ -65,9 +67,6 @@ class Torus:
     simplex.add_simplex([2,7,6])
     simplex.add_simplex([2,3,7])
     simplex.add_simplex([1,2,6])
-    
-
-
 
 if __name__ == "__main__":
     two_sphere = TwoSphere()
@@ -84,5 +83,5 @@ if __name__ == "__main__":
 
     torus = Torus()
     print("TORUS:")
-    print(torus.simplex.betti_numbers())
+    print(f"The betti numbers are {torus.simplex.betti_numbers()}")
 

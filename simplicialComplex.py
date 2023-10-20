@@ -7,16 +7,16 @@ class SimplicialComplex:
     simplicialComplex: list[list[list[int]]] = []
 
     def __init__(self, dimension: int) -> None:
-        self.dimension = dimension
-        self.simplicialComplex = [[] for _ in range(dimension)]
+        self.dimension = dimension + 1
+        self.simplicialComplex = [[] for _ in range(self.dimension)]
 
     def add_simplex(self, simplex: list[int]) -> None:
-        self.simplicialComplex[len(simplex) - 1].append(simplex)
+        self.simplicialComplex[len(simplex) - 1].append(sorted(simplex))
 
     def get_k_simplices(self, k: int) -> list[list[int]]:
         return self.simplicialComplex[k]
 
-    # Gaussian elimination matrix rank
+    # Gaussian elimination matrix rank (doesn't work)
     # Source: https://cp-algorithms.com/linear_algebra/rank-matrix.html
     def __matrix_rank(self, M: np.ndarray) -> int:
         """
@@ -69,6 +69,7 @@ class SimplicialComplex:
     def boundary(self, k: int) -> np.ndarray:
         # boundary: k-simplices -> k-1-simplies
         # return a matrix from span{k-simplices} -> im(boundary)
+        # note that the k-simplices have k+1 entries
 
         basis_map = (
             dict()
@@ -82,9 +83,7 @@ class SimplicialComplex:
 
             for h in range(k + 1):
                 # consider the list without the hth element
-                boundary_simplex = tuple(simplex[:h] + simplex[(h + 1) :])
-
-                # sgn = self.perm_parity(boundary_simplex)
+                boundary_simplex = tuple(sorted(simplex[:h] + simplex[(h + 1) :]))
 
                 # boundary_simplex should now be sorted; we make this the canonical form
                 # and add it to the basis
@@ -92,16 +91,19 @@ class SimplicialComplex:
                     basis_map[boundary_simplex] = basis_n
                     basis_n += 1
 
+        # print(basis_map)
         M = np.zeros([len(k_simplices), len(basis_map)])
+
         for i, simplex in enumerate(k_simplices):
             row_vector: list[int] = [0] * len(basis_map)
-            # each simplex will have length k
 
             for h in range(k + 1):
                 # consider the list without the hth element
                 boundary_simplex = simplex[:h] + simplex[(h + 1) :]
+                # print(boundary_simplex)
 
                 sgn = self.perm_parity(boundary_simplex)
+                boundary_simplex.sort()
 
                 row_vector[basis_map[tuple(boundary_simplex)]] = sgn * (-1) ** h
 
@@ -110,10 +112,15 @@ class SimplicialComplex:
         return M
 
     def boundary_rank(self, k: int) -> int:
-        return self.__matrix_rank(self.boundary(k))
+        # return self.__matrix_rank(self.boundary(k))
+        return np.linalg.matrix_rank(self.boundary(k))
 
-    def betti_number(self, k: int) -> int:
-        return len(self.get_k_simplices(k)) - self.boundary_rank(k)
+    def betti_numbers(self) -> int:
+        b = [len(self.get_k_simplices(0)) - self.boundary_rank(1)]
 
-    def betti_numbers(self) -> list[int]:
-        return [self.betti_number(j) for j in range(self.dimension)]
+        for j in range(1, self.dimension-1): 
+
+            b.append(len(self.get_k_simplices(j)) - self.boundary_rank(j) - self.boundary_rank(j+1))
+            
+        b.append(len(self.get_k_simplices(self.dimension-1)) - self.boundary_rank(self.dimension-1))
+        return b

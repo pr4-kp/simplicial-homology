@@ -74,9 +74,9 @@ if __name__ == "__main__":
     # print(f"the 1-simplices are {simplex.get_k_simplices(1)}")
 
     print("2-SPHERE:")
-    for i in range(3):
-        print(f"The rank of the {i}-boundary map is {two_sphere.simplex.boundary_rank(i)}")
-        print(f"{i}-boundary map:\n{two_sphere.simplex.boundary(i)}")
+    # for i in range(3):
+    #     print(f"The rank of the {i}-boundary map is {two_sphere.simplex.boundary_rank(i)}")
+    #     print(f"{i}-boundary map:\n{two_sphere.simplex.boundary(i)}")
     
     print(f"The betti numbers are {two_sphere.simplex.betti_numbers()}")
 

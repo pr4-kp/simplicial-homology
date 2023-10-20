@@ -2,7 +2,7 @@
 Topology honors project: simplicial homology
 
 ## todo:
-- [ ] simplex data structure
+- [x] simplex data structure
   - [ ] make a filetype for data structure
-- [ ] implement boundary operator (matrix)
-- [ ] compute betti numbers
+- [x] implement boundary operator (matrix)
+- [x] compute betti numbers

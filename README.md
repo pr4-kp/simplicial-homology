@@ -1,4 +1,4 @@
-# Simplicial Homology
+# Simplicial Homology Algorithms
 An implementation of algorithms used in computational topology. Created for the MATH 551 honors project.
 
 ## Usage

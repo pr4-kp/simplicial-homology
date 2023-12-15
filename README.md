@@ -16,7 +16,7 @@ K.add_simplex([1])
 ```
 
 ### Topological Invariants
-The Euler characteristic of a `SimplicialComplex` $K$ by calling 
+The Euler characteristic of a `SimplicialComplex` $K$ by is returned calling 
 ```python
 K.euler_characteristic()
 ```

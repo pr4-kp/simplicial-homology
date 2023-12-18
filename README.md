@@ -27,7 +27,7 @@ K.betti_numbers()
 ```
 
 ## Tests
-In the `test.py` file, there are example calculations done on the $2$-sphere $\mathbb{S}^2$ and the torus $\mathbb{T}^2$.
+In the `tester.py` file, there are example calculations done on the $2$-sphere $\mathbb{S}^2$ and the torus $\mathbb{T}^2$.
 
 ## Todo:
 - [x] Simplex data structure
